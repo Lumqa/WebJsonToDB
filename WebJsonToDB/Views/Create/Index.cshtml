@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Name table</h2>
+<input class="form-control" id="nameTable" style="width:15%"/>
+<div class="form-horizontal">
+    <hr />
+    <div class="row row-centered d-inline-flex">
+        <div class="inputs col-sm-2 mt-2">
+            <input class="form-control" id="id-1" name="nameInput" />
+        </div>
+        <div class="selects col-sm-2">
+            <select class="form-control" id="id-sel-1" name="nameType">
+                <option value="string">string</option>
+                <option value="int">int</option>
+                <option value="decimal">decimal</option>
+            </select>
+        </div>
+    </div>
+    <br/>
+    <input class="btn btn-info" type="button" onclick="add_input(), add_select()" value="Добавить строку" />
+    <input class="btn btn-info" type="submit" id="sub" value="Создать" />
+</div>
+
+<h2 id="h2"></h2>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    var incr = 2;
+    function add_input() {
+        console.log('input');
+        var inputs = $('.inputs input[type="text"]');
+        var new_id = incr;
+        $('.inputs').append('<input class="form-control" id="id-' + new_id + '" name="name[]" />');
+    }
+    function add_select() {
+        console.log('select');
+        var new_id = incr;
+        incr++;
+        $('.selects').append('<select class="form-control" id="id-sel-' + new_id + '" name="nameType">'
+            + '<option value = "string">string</option>'
+            + '<option value = "int" >int</option >'
+            + '<option value = "decimal" >decimal</option >'
+            + '</select > ');
+    }
+
+
+    $('#sub').click(function (e) {
+        e.preventDefault();
+
+        var dict = {};
+
+        dict['nameTable'] = $('#nameTable').val();
+        for (var i = 1; i < incr; i++) {
+            dict[$('#id-' + i + '').val()] = $('#id-sel-' + i + '').val();
+        }
+        console.log(dict);
+
+        var myData = JSON.stringify(dict);
+
+        $.ajax({
+            type: 'POST',
+            url: '/Create/Add',
+            contentType: "application/json",
+            dataType: 'json',
+            data: myData,
+            success: function (result) {
+                console.log('Data received: ');
+                console.log(result);
+            }
+        });
+        document.getElementById("h2").innerHTML = "Добавлено";
+    });
+</script>

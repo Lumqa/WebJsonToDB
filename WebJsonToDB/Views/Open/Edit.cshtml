@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+    List<dynamic> values = ViewBag.Values;
+}
+
+<h2>Edit</h2>
+
+<div class="form-horizontal">
+    <hr />
+    <form method="post" action="~/Open/Edit">
+        @foreach (var i in ViewBag.RowInfo)
+        {
+            foreach (var k in i)
+            {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label class = "control-label col-md-2">@k.Key: </label>
+                    <input name="par" value="@k.Value" /><br />
+                </div>
+            </div>
+            }
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+</div>

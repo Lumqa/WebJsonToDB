@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    @TempData["temp"]
+</div>
+
+<br />
+<br />
+<div class="c1">
+    <div class="dropdown c2">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Tables
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (var i in ViewBag.Tables)
+            {
+                @foreach (var k in i)
+                {
+                    <li><a asp-controller="Open" asp-action="Index" asp-route-nameTable="@k.Value">@k.Value</a></li>
+                }
+            }
+        </ul>
+    </div>
+<a asp-controller="Create" asp-action="Index"><button class="btn btn-info">CreateTable</button></a>
+</div>

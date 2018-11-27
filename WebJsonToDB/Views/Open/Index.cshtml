@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Open";
+    string table = ViewBag.Table;
+    int count = ViewBag.Count;
+    List<dynamic> id = ViewBag.Id;
+    int j = 0;
+}
+
+<h2>Open</h2>
+<h3>@table</h3>
+
+<a asp-controller="Open" asp-action="Create" asp-route-table="@table">Create New</a>
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        @foreach (var i in ViewBag.ColumNames)
+        {
+            <th>
+                @i
+            </th>
+        }
+    </tr>
+
+    @foreach (var i in ViewBag.Colums)
+    {
+
+    <tr>
+        @foreach (var k in i)
+            {
+        <td>
+            @k.Value
+        </td>
+            }
+        <td class="tdborder">
+            <a asp-controller="Open" asp-action="Delete" asp-route-id="@id[j]" asp-route-table="@table" asp-route-fcolumn="@ViewBag.FColumn">Delete</a> |
+            <a asp-controller="Open" asp-action="Edit" asp-route-id="@id[j]" asp-route-table="@table" asp-route-fcolumn="@ViewBag.FColumn">Edit</a>
+        </td>
+    </tr>
+    j++;
+    }
+
+</table>
